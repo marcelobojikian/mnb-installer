@@ -55,7 +55,9 @@ Ps. __Futuramente não será permitida a reinstalação dos softwares já instal
 
 O sistema depende de alguns pacotes para funcionar.
 
-Instalar __dialog__ :
+Instalar __pandoc__ & __dialog__ :
+
+| **sudo apt-get install pandoc**
 
 | **sudo apt-get install dialog**
 
