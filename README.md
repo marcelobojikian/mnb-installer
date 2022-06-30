@@ -88,17 +88,17 @@ Após a instalação do __mnb-installer.deb__ o comando __mnb-installer__ estar�
 
 <p align="center">
 
-  <img alt="Tela inicial" src="https://github.com/marcelobojikian/mnb-installer/blob/master/assets/introduce.png?raw=true"  width="600px" />
+  <img alt="Tela inicial" src="https://github.com/marcelobojikian/mnb-installer/blob/main/assets/introduce.png?raw=true"  width="600px" />
 
-  <img alt="Seleção de categoria" src="https://github.com/marcelobojikian/mnb-installer/blob/master/assets/category.png?raw=true"  width="600px" />
+  <img alt="Seleção de categoria" src="https://github.com/marcelobojikian/mnb-installer/blob/main/assets/category.png?raw=true"  width="600px" />
 
-  <img alt="Seleção de programas" src="https://github.com/marcelobojikian/mnb-installer/blob/master/assets/programs.png?raw=true"  width="600px" />
+  <img alt="Seleção de programas" src="https://github.com/marcelobojikian/mnb-installer/blob/main/assets/programs.png?raw=true"  width="600px" />
 
-  <img alt="Confirmação de instalação" src="https://github.com/marcelobojikian/mnb-installer/blob/master/assets/install.png?raw=true"  width="600px" />
+  <img alt="Confirmação de instalação" src="https://github.com/marcelobojikian/mnb-installer/blob/main/assets/install.png?raw=true"  width="600px" />
 
-  <img alt="Andamento da instalação" src="https://github.com/marcelobojikian/mnb-installer/blob/master/assets/progress.png?raw=true"  width="600px" />
+  <img alt="Andamento da instalação" src="https://github.com/marcelobojikian/mnb-installer/blob/main/assets/progress.png?raw=true"  width="600px" />
 
-  <img alt="Finalização do programa " src="https://github.com/marcelobojikian/mnb-installer/blob/master/assets/final.png?raw=true"  width="600px" />
+  <img alt="Finalização do programa " src="https://github.com/marcelobojikian/mnb-installer/blob/main/assets/final.png?raw=true"  width="600px" />
 
 </p>
 
