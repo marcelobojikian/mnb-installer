@@ -1,0 +1,96 @@
+#!/bin/bash
+DPKG_NAME=$(cat DEBIAN/package.info | grep Package | awk '{ print $2 }')
+
+build_DEBIAN(){
+        
+    mkdir build/DEBIAN
+    cp -r DEBIAN/package.info build/DEBIAN/control
+
+    for conf in $(find build -type f -printf "%P\n" | grep etc/)
+    do
+        echo "/$conf" >> build/DEBIAN/conffiles
+    done
+
+}
+
+build_changelog(){
+
+    local dpkg_name=$1
+
+    for change in $(find changelog -name *.change | sort -r)
+    do
+        cat $change >> build/changelog.Debian
+    done
+
+    gzip --best -n build/changelog.Debian
+
+    mkdir -p build/usr/share/doc/$(echo $dpkg_name)
+    mv build/changelog.Debian.gz build/usr/share/doc/$dpkg_name
+
+}
+
+build_copyright(){
+    local dpkg_name=$1
+    cp LICENSE build/usr/share/doc/$dpkg_name/copyright
+}
+
+build_man(){
+
+    pandoc -s -t man DEBIAN/mnb-installer.1.md -o build/$DPKG_NAME.1
+    gzip --best -n build/$DPKG_NAME.1
+    mkdir -p build/usr/share/man/man1
+    mv build/$DPKG_NAME.1.gz build/usr/share/man/man1
+
+}
+
+_build(){
+
+    if [ -d build ]; then rm -d -r build; fi
+
+    cp -r src build
+    if [ $? -ne 0 ]; then echo "Falha ao copiar src"; fi
+
+    build_DEBIAN
+    if [ $? -ne 0 ]; then echo "Falha ao criar pasta build/DEBIAN"; fi
+
+    build_changelog $DPKG_NAME
+    if [ $? -ne 0 ]; then echo "Falha ao criar changelog"; fi
+
+    build_copyright $DPKG_NAME
+    if [ $? -ne 0 ]; then echo "Falha ao criar copyright"; fi
+
+    build_man
+    if [ $? -ne 0 ]; then echo "Falha ao criar manual"; fi
+
+}
+
+_pack(){
+
+    if [ ! -d build ]; then _build; fi
+
+    if [ -d dist ]; then rm -d -r dist; fi
+
+    mkdir dist
+    sudo cp -r build dist/$DPKG_NAME
+
+    sudo chmod +x dist/$DPKG_NAME/bin/$DPKG_NAME
+
+    dpkg-deb --build dist/$DPKG_NAME
+
+    sudo chown -R $USER dist
+
+    lintian dist/mnb-installer.deb
+
+}
+
+_clean(){
+    if [ -d build ]; then rm -d -r build; fi
+    if [ -d dist ]; then rm -d -r dist; fi
+}
+
+case $1 in
+    clean) _clean;;
+    build) _build;;
+    pack) _pack;;
+    *) echo "comando invalido";;
+esac

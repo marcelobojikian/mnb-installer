@@ -1,0 +1,4 @@
+dialog
+        --backtitle 'MNB Installer - GUI'
+        --msgbox 'Programas instalados com sucesso'
+        0 0

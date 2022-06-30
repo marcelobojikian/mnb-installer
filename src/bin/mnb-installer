@@ -1,0 +1,97 @@
+#!/bin/bash
+source /etc/mnb/installer/default.conf
+
+_name() { basename $1 | awk -F '.' '{print$1}'; }
+_screen() { cat $SRC_GUI/$1.gui; }
+_installer() { cat $SRC_BASH/$1/$2.installer; }
+
+INTRUDUCE_SCREEN=$(_screen introduce)
+INSTALL_SCREEN=$(_screen install)
+FINAL_SCREEN=$(_screen final)
+
+function _categories(){
+
+    local SCREEN=$(_screen category)
+    local CURR_MACHINE=$(uname -m)
+    for _folder in $(find $SRC_BASH -type d -printf "%P\n")
+    do
+        local NAME=$(_name $_folder)
+        local MATCH=$([ $NAME == $CURR_MACHINE ] && echo 'on'|| echo 'off')
+        SCREEN="${SCREEN} '${NAME}' '' ${MATCH}"
+    done
+
+    echo $SCREEN
+
+}
+
+function _prograns(){
+
+    local SCREEN=$(_screen programs)
+
+    for _file in $(find ${SRC_BASH}/$1 -type f)
+    do
+        local NAME=$(_name $_file)
+        local CONTENT=$([ -s $_file ] && echo '' || echo 'none' )
+        local EXIST=$(command -v $NAME > /dev/null && echo 'on'|| echo 'off')
+        SCREEN="${SCREEN} '${NAME}' '${CONTENT}' ${EXIST}"
+    done
+
+    echo $SCREEN
+
+}
+
+_next=introduce_gui
+while true; do
+    case "$_next" in
+        introduce_gui)
+            _next=category_gui
+            eval $INTRUDUCE_SCREEN;;
+        category_gui)
+            _next=programs_gui
+            _previous=introduce_gui
+            CATEGORY_SCREEN=$(_categories)
+            category=$(eval $CATEGORY_SCREEN)
+            ;;
+        programs_gui)
+            _previous=category_gui
+            _next=install_gui
+            PROGRAM_SCREEN=$(_prograns ${category})
+            programs=$(eval $PROGRAM_SCREEN)
+            ;;
+        install_gui)
+            _previous=programs_gui
+            _next=progress_gui
+            eval $INSTALL_SCREEN
+            ;;
+        progress_gui)
+            _previous=install_gui
+            _next=final_gui
+
+            TOTAL=$(echo $programs | awk '{print NF}')
+            COUNT=0
+
+            echo "$programs" | while read prog
+            do 
+                NAME=$(_name $prog)
+                COUNT=$(($COUNT+1))
+                PORCENT=$((COUNT*100/TOTAL))
+
+                (echo $PORCENT; sleep 1) | dialog --title "Instalando $COUNT de $TOTAL ..." --gauge "Programa:  $NAME" 8 40 0
+                CMD_BASH=$(_installer $category $prog)
+                echo "$CMD_BASH"
+            done
+            ;;
+        final_gui)
+            eval $FINAL_SCREEN
+            clear
+            break
+            ;;
+        *)
+        echo "Tela inválida '$_next'."
+        exit 1
+    esac
+    case $? in
+        1) _next=$_previous;;
+        255) clear; break;;
+    esac
+done

@@ -1,0 +1,11 @@
+dialog --backtitle 'Bem vindo ao MNB Installer - GUI' 
+       --msgbox '
+Esse projeto foi criado com a finalidade de facilitar a instalação de programas frequentemente utilizados, configurar as estruturas padrão que utilizo executando scripts personalizados. \n\n
+Os passos de instalação será: \n\n
+1. Selecionar uma categoria. \n
+2. Marque os programas que deseja instalar. \n
+3. Confirmar operações. \n
+4. Instalar. \n
+5. Finalizar programa. \n\n
+Ps. Futuramente não será permitida a reinstalação dos softwares já instalados. '
+       0 0

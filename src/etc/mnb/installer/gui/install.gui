@@ -1,0 +1,8 @@
+dialog --backtitle 'MNB Installer - GUI' 
+       --yesno  
+"
+Categoria: $category \n
+Programas: \n
+$programs
+" 
+       0 0

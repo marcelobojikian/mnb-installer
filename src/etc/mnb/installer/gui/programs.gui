@@ -1,0 +1,4 @@
+dialog --stdout 
+       --separate-output 
+       --backtitle 'MNB Installer - GUI' 
+       --checklist 'Marque os programas que deseja instalar' 0 0 0 

@@ -1,0 +1,4 @@
+dialog 
+    --stdout 
+    --backtitle 'MNB Installer - GUI' 
+    --radiolist 'Selecione uma categoria:' 0 0 0 
