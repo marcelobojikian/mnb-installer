@@ -104,6 +104,6 @@ Após a instalação do __mnb-installer.deb__ o comando __mnb-installer__ estar�
 
 ## :memo: Licença
 
-Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para mais detalhes.
+Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 
