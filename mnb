@@ -66,9 +66,9 @@ _build(){
 
 _pack(){
 
-    if [ ! -d build ]; then _build; fi
-
     if [ -d dist ]; then rm -d -r dist; fi
+
+    _build
 
     mkdir dist
     sudo cp -r build dist/$DPKG_NAME
