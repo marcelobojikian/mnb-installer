@@ -78,7 +78,7 @@ while true; do
 
                 (echo $PORCENT; sleep 1) | dialog --title "Instalando $COUNT de $TOTAL ..." --gauge "Programa:  $NAME" 8 40 0
                 CMD_BASH=$(_installer $category $prog)
-                echo "$CMD_BASH"
+                eval "$CMD_BASH"
             done
             ;;
         final_gui)
